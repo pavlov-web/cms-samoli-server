@@ -30,6 +30,11 @@ export class AuthController {
     return user;
   }
 
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('token');
+  }
+
   @Post('register')
   @UsePipes(ValidationPipe)
   async register(@Body() dto: CreateUserDto) {

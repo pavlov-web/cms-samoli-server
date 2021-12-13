@@ -24,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module.js';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes({
