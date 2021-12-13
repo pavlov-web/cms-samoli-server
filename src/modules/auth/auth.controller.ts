@@ -8,7 +8,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response } from 'express';
+import { IExpressRequest } from '../../types';
 import { AuthService } from './auth.service.js';
 import { Auth } from './decorators/auth.decorator';
 import { LoginAuthDto } from './dto/login-auth.dto.js';
@@ -37,7 +38,7 @@ export class AuthController {
 
   @Get('current')
   @Auth()
-  currentUser(@Req() request: Request) {
+  currentUser(@Req() request: IExpressRequest) {
     return request.user;
   }
 }

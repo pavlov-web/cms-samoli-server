@@ -1,25 +1,31 @@
 version: '3.8'
 
 services:
-  db:
-    container_name: cms
-    image: postgres
-    restart: always
+  api:
+    container_name: samoli-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - postgres
+    environment:
+        DATABASE_URL: postgres://root:root@postgres:5432/cms
+    ports:
+      - "3000:3000"
+
+  postgres:
+    container_name: samoli-db
+    image: postgres:14.1
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: cms
-    ports:
-      - "5432:5432"
-  pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    ports:
-      - "5050:80"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
-#sudo lsof -i : 5432
+volumes:
+  pgdata:
+#sudo lsof -i :5432
 #sudo kill
